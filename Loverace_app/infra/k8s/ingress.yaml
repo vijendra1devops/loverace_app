@@ -1,0 +1,77 @@
+# ── Application Gateway Ingress Controller (AGIC) ─────────────────────────────
+# AKS add-on: enabled in aks.bicep (addonProfiles.ingressApplicationGateway)
+#
+# After AKS deploy, retrieve the App Gateway public IP:
+#   az network public-ip show \
+#     -g MC_rg-loverace-prod_aks-loverace-prod_eastus \
+#     -n <appgw-pip-name> --query ipAddress -o tsv
+#
+# Point api.loverace.app → that IP in your DNS provider.
+# TLS certificate is issued by cert-manager (see cert-issuer.yaml).
+#
+# Replace host values with your actual domain.
+# ─────────────────────────────────────────────────────────────────────────────
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loverace-ingress
+  namespace: loverace
+  annotations:
+    kubernetes.io/ingress.class: "azure/application-gateway"
+
+    # TLS certificate via cert-manager
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+
+    # WebSocket support — AGIC passes these through by default; explicit for clarity
+    appgw.ingress.kubernetes.io/request-timeout: "3600"
+    appgw.ingress.kubernetes.io/connection-draining: "true"
+    appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
+
+    # Cookie-based affinity for WebSocket pods (required — WS is stateful per pod)
+    appgw.ingress.kubernetes.io/cookie-based-affinity: "true"
+
+    # CORS — allow requests from the frontend App Service
+    appgw.ingress.kubernetes.io/backend-path-prefix: "/"
+
+    # Override backend port so AGIC probes the correct container port
+    appgw.ingress.kubernetes.io/override-frontend-port: "443"
+
+spec:
+  tls:
+    - hosts:
+        - api.loverace.app          # REPLACE with your domain
+      secretName: loverace-api-tls  # cert-manager creates this secret
+
+  rules:
+    - host: api.loverace.app        # REPLACE with your domain
+      http:
+        paths:
+          # ── REST API (core_api, port 8000) ─────────────────────────────────
+          - path: /v1/
+            pathType: Prefix
+            backend:
+              service:
+                name: core-api-svc
+                port:
+                  number: 80
+
+          # Health endpoint (shared — routes to core_api)
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: core-api-svc
+                port:
+                  number: 80
+
+          # ── WebSocket gateway (realtime_gateway, port 8001) ────────────────
+          # AGIC routes /ws to the realtime-gateway-svc.
+          # Cookie affinity above pins a client to the same pod for WS lifetime.
+          - path: /ws
+            pathType: Prefix
+            backend:
+              service:
+                name: realtime-gateway-svc
+                port:
+                  number: 80
+

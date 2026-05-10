@@ -1,0 +1,84 @@
+{{- if .Values.keyvault.name }}
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: kv-core-api
+  namespace: loverace
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"
+    userAssignedIdentityID: ""
+    keyvaultName: "{{ .Values.keyvault.name }}"
+    tenantId: "{{ .Values.keyvault.tenantId }}"
+    objects: |
+      array:
+        - |
+          objectName: DATABASE-URL
+          objectType: secret
+          objectAlias: DATABASE_URL
+        - |
+          objectName: ASYNCPG-URL
+          objectType: secret
+          objectAlias: ASYNCPG_URL
+        - |
+          objectName: JWT-SECRET
+          objectType: secret
+          objectAlias: JWT_SECRET
+        - |
+          objectName: STORAGE-ACCOUNT-NAME
+          objectType: secret
+          objectAlias: STORAGE_ACCOUNT_NAME
+        - |
+          objectName: STORAGE-KEY
+          objectType: secret
+          objectAlias: STORAGE_KEY
+  secretObjects:
+    - secretName: core-api-secrets
+      type: Opaque
+      data:
+        - objectName: DATABASE_URL
+          key: DATABASE_URL
+        - objectName: ASYNCPG_URL
+          key: ASYNCPG_URL
+        - objectName: JWT_SECRET
+          key: JWT_SECRET
+        - objectName: STORAGE_ACCOUNT_NAME
+          key: STORAGE_ACCOUNT_NAME
+        - objectName: STORAGE_KEY
+          key: STORAGE_KEY
+
+---
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: kv-realtime-gateway
+  namespace: loverace
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"
+    userAssignedIdentityID: ""
+    keyvaultName: "{{ .Values.keyvault.name }}"
+    tenantId: "{{ .Values.keyvault.tenantId }}"
+    objects: |
+      array:
+        - |
+          objectName: ASYNCPG-URL
+          objectType: secret
+          objectAlias: ASYNCPG_URL
+        - |
+          objectName: JWT-SECRET
+          objectType: secret
+          objectAlias: JWT_SECRET
+  secretObjects:
+    - secretName: realtime-gateway-secrets
+      type: Opaque
+      data:
+        - objectName: ASYNCPG_URL
+          key: ASYNCPG_URL
+        - objectName: JWT_SECRET
+          key: JWT_SECRET
+{{- end }}

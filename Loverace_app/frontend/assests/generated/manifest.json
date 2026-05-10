@@ -1,0 +1,84 @@
+{
+  "generated": [
+    {
+      "path": "frontend/assests/generated/backgrounds/hero-bg.webp",
+      "category": "backgrounds",
+      "prompt": "romantic rooftop sunset date night cityscape, warm golden light, bokeh, cinematic photography"
+    },
+    {
+      "path": "frontend/assests/generated/backgrounds/radar-bg.webp",
+      "category": "backgrounds",
+      "prompt": "beautiful night city street lights rain reflections, romantic atmosphere, moody dark, heart bokeh"
+    },
+    {
+      "path": "frontend/assests/generated/backgrounds/swipe-bg.webp",
+      "category": "backgrounds",
+      "prompt": "soft rose petals scattered on white marble surface, minimal aesthetic, romantic close-up, pink tones"
+    },
+    {
+      "path": "frontend/assests/generated/backgrounds/chat-bg.webp",
+      "category": "backgrounds",
+      "prompt": "cozy cafe warm lights, two coffee cups on wooden table, romantic date setting, bokeh background"
+    },
+    {
+      "path": "frontend/assests/generated/backgrounds/login-bg.webp",
+      "category": "backgrounds",
+      "prompt": "abstract red and pink heart bokeh lights background, dark romantic, neon hearts, beautiful"
+    },
+    {
+      "path": "frontend/assests/generated/backgrounds/matches-bg.webp",
+      "category": "backgrounds",
+      "prompt": "beautiful couple silhouette walking on beach sunset, romantic, golden hour, love"
+    },
+    {
+      "path": "frontend/assests/generated/ui/match-celebration.webp",
+      "category": "ui",
+      "prompt": "explosion of red hearts and pink petals, match celebration, love, joyful confetti burst, dark background"
+    },
+    {
+      "path": "frontend/assests/generated/ui/levelup-badge.webp",
+      "category": "ui",
+      "prompt": "glowing golden trophy with hearts and stars, achievement badge, level up, romantic gold tones"
+    },
+    {
+      "path": "frontend/assests/generated/ui/logo.webp",
+      "category": "ui",
+      "prompt": "Loverace dating app logo concept, red heart with radar signal ripple waves, modern minimal design, white background"
+    },
+    {
+      "path": "frontend/assests/generated/ui/couple-silhouette.webp",
+      "category": "ui",
+      "prompt": "romantic couple silhouette kissing at golden sunset, heart bokeh lights, love photography"
+    },
+    {
+      "path": "frontend/assests/generated/ui/pattern-bg.webp",
+      "category": "ui",
+      "prompt": "watercolor pattern, pink and red hearts flowers, seamless romantic repeat, soft pastel"
+    },
+    {
+      "path": "frontend/assests/generated/ui/radar-icon.webp",
+      "category": "ui",
+      "prompt": "red heart pulse radar wave icon, proximity dating, signal waves, minimal flat design, white background"
+    },
+    {
+      "path": "frontend/assests/generated/ui/badge-dating.webp",
+      "category": "ui",
+      "prompt": "stage badge Dating, heart with D letter, pink gradient, romantic minimal"
+    },
+    {
+      "path": "frontend/assests/generated/ui/badge-couples.webp",
+      "category": "ui",
+      "prompt": "stage badge Couples, two hearts intertwined, red gradient, love minimal icon"
+    },
+    {
+      "path": "frontend/assests/generated/ui/badge-soulmate.webp",
+      "category": "ui",
+      "prompt": "stage badge Soulmate, infinite symbol hearts, deep crimson gradient, mystical"
+    },
+    {
+      "path": "frontend/assests/generated/ui/badge-lovers.webp",
+      "category": "ui",
+      "prompt": "stage badge Lovers, flame heart, dark red gold gradient, passionate"
+    }
+  ]
+}

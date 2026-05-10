@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heart Fill</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="container">
+  <div class="heart-wrap">
+    <div class="heart">
+      <div class="tank"></div>
+      <svg class="curve" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g>
+          <use href="#gentle-wave" x="48" y="0" fill="rgba(103, 130, 191, 0.5)" />
+          <use href="#gentle-wave" x="48" y="1" fill="rgba(103, 130, 191, 0.3)" />
+          <use href="#gentle-wave" x="48" y="2" fill="rgba(103, 130, 191, 1)" />
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <clipPath id="myPath" clipPathUnits="objectBoundingBox">
+      <path d="M0.373,0.967 S0.616,0.866,0.768,0.644 S0.912,0.107,0.739,0 S0.373,0.108,0.373,0.108 S0.166,-0.113,0,-0.002 S-0.159,0.432,-0.021,0.644 S0.373,0.967,0.373,0.967"></path>
+    </clipPath>
+  </defs>
+</svg>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: core-api-config
+  namespace: loverace
+data:
+  MODERATION_ENABLED: "{{ .Values.core_api.moderationEnabled | default false }}"
+  DEBUG: "{{ .Values.core_api.debug | default false }}"
+  PG_NOTIFY_CHANNEL: "{{ .Values.core_api.pgNotifyChannel | default "loverace_events" }}"
+  JWT_EXPIRY_MINUTES: "{{ .Values.core_api.jwtExpiry | default 60 }}"
+  STORAGE_CONTAINER: "{{ .Values.core_api.storage.container | default "media" }}"
+  STORAGE_PROVIDER: "azure"
+  CORS_ORIGINS: "{{ .Values.frontend.origin | default (printf "https://%s" .Values.apiDomain) }}"

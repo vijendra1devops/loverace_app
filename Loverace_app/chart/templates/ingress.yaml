@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loverace-ingress
+  namespace: loverace
+  annotations:
+    kubernetes.io/ingress.class: "azure/application-gateway"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    appgw.ingress.kubernetes.io/request-timeout: "3600"
+    appgw.ingress.kubernetes.io/connection-draining: "true"
+    appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
+    appgw.ingress.kubernetes.io/cookie-based-affinity: "true"
+    appgw.ingress.kubernetes.io/backend-path-prefix: "/"
+    appgw.ingress.kubernetes.io/override-frontend-port: "443"
+spec:
+  tls:
+    - hosts:
+        - {{ .Values.apiDomain }}
+      secretName: {{ .Values.tls.secretName }}
+
+  rules:
+    - host: {{ .Values.apiDomain }}
+      http:
+        paths:
+          - path: /v1/
+            pathType: Prefix
+            backend:
+              service:
+                name: core-api-svc
+                port:
+                  number: 80
+
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: core-api-svc
+                port:
+                  number: 80
+
+          - path: /ws
+            pathType: Prefix
+            backend:
+              service:
+                name: realtime-gateway-svc
+                port:
+                  number: 80

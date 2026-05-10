@@ -1,0 +1,17 @@
+# core_api – Kubernetes ConfigMap
+# Non-secret env vars. Secrets come from Key Vault CSI (infra/k8s/keyvault-csi.yaml).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: core-api-config
+  namespace: loverace
+data:
+  MODERATION_ENABLED: "false"
+  DEBUG: "false"
+  PG_NOTIFY_CHANNEL: "loverace_events"
+  JWT_EXPIRY_MINUTES: "60"
+  # Azure Blob Storage — container name (account name + key come from Key Vault)
+  STORAGE_CONTAINER: "media"
+  STORAGE_PROVIDER:  "azure"
+  # CORS — set to your Azure App Service URL
+  CORS_ORIGINS: "https://loverace.azurewebsites.net,https://loverace.app"

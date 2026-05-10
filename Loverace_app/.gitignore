@@ -1,0 +1,54 @@
+generate-assets.ts
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+*.sqlite3
+*.db
+
+# Env files with secrets (keep examples)
+.env
+!.env.example
+frontend/.env
+!frontend/.env.example
+services/core_api/.env
+services/realtime_gateway/.env
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+*.local
+
+# Vite
+*.timestamp-*.mjs
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets / certs
+*.pem
+*.key
+*.crt
+parameters.json
+!parameters.example.json

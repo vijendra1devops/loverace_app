@@ -1,0 +1,30 @@
+# Production override values (example)
+
+acrLoginServer: "<your-acr-login-server>"
+imageTag: "{{ .Chart.AppVersion }}"
+
+apiDomain: "api.loverace.app"
+tls:
+  secretName: loverace-api-tls
+
+keyvault:
+  name: "<your-keyvault-name>"
+  tenantId: "<your-tenant-id>"
+  subscriptionId: "<your-subscription-id>"
+
+frontend:
+  image:
+    repository: "<acr>/loverace-frontend"
+    tag: "{{ .Values.imageTag }}"
+
+core_api:
+  image:
+    repository: "<acr>/loverace-core-api"
+    tag: "{{ .Values.imageTag }}"
+  replicaCount: 2
+
+realtime_gateway:
+  image:
+    repository: "<acr>/loverace-realtime-gateway"
+    tag: "{{ .Values.imageTag }}"
+  replicaCount: 2

@@ -1,0 +1,98 @@
+# ── Key Vault CSI SecretProviderClass ─────────────────────────────────────────
+# Mounts Key Vault secrets as env-var-backed volumes into pods.
+#
+# Pre-requisites on the AKS cluster:
+#   az aks enable-addons \
+#     -g rg-loverace-prod -n aks-loverace-prod \
+#     --addons azure-keyvault-secrets-provider
+#
+# Replace TENANT_ID, KEYVAULT_NAME, and USER_ASSIGNED_CLIENT_ID below.
+# These are outputs from the Bicep deployment.
+#
+# Apply: kubectl apply -f infra/k8s/keyvault-csi.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+
+---
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: kv-core-api
+  namespace: loverace
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"       # uses AKS kubelet managed identity
+    userAssignedIdentityID: ""         # leave empty for kubelet identity
+    keyvaultName: "kv-loverace-prod"   # REPLACE with your Key Vault name
+    tenantId: "<TENANT_ID>"            # REPLACE with your Azure tenant ID
+    objects: |
+      array:
+        - |
+          objectName: DATABASE-URL
+          objectType: secret
+          objectAlias: DATABASE_URL
+        - |
+          objectName: ASYNCPG-URL
+          objectType: secret
+          objectAlias: ASYNCPG_URL
+        - |
+          objectName: JWT-SECRET
+          objectType: secret
+          objectAlias: JWT_SECRET
+        - |
+          objectName: STORAGE-ACCOUNT-NAME
+          objectType: secret
+          objectAlias: STORAGE_ACCOUNT_NAME
+        - |
+          objectName: STORAGE-KEY
+          objectType: secret
+          objectAlias: STORAGE_KEY
+  # Sync to a native Kubernetes Secret so pods can use envFrom
+  secretObjects:
+    - secretName: core-api-secrets
+      type: Opaque
+      data:
+        - objectName: DATABASE_URL
+          key: DATABASE_URL
+        - objectName: ASYNCPG_URL
+          key: ASYNCPG_URL
+        - objectName: JWT_SECRET
+          key: JWT_SECRET
+        - objectName: STORAGE_ACCOUNT_NAME
+          key: STORAGE_ACCOUNT_NAME
+        - objectName: STORAGE_KEY
+          key: STORAGE_KEY
+
+---
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: kv-realtime-gateway
+  namespace: loverace
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"
+    userAssignedIdentityID: ""
+    keyvaultName: "kv-loverace-prod"   # REPLACE
+    tenantId: "<TENANT_ID>"            # REPLACE
+    objects: |
+      array:
+        - |
+          objectName: ASYNCPG-URL
+          objectType: secret
+          objectAlias: ASYNCPG_URL
+        - |
+          objectName: JWT-SECRET
+          objectType: secret
+          objectAlias: JWT_SECRET
+  secretObjects:
+    - secretName: realtime-gateway-secrets
+      type: Opaque
+      data:
+        - objectName: ASYNCPG_URL
+          key: ASYNCPG_URL
+        - objectName: JWT_SECRET
+          key: JWT_SECRET

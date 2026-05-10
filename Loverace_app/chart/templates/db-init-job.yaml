@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: loverace-db-init
+  namespace: loverace
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: db-init
+          image: postgres:15
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ASYNCPG_URL
+              valueFrom:
+                secretKeyRef:
+                  name: core-api-secrets
+                  key: ASYNCPG_URL
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -euo pipefail
+              echo "Waiting for database..."
+              until psql "$ASYNCPG_URL" -c '\l' >/dev/null 2>&1; do echo waiting; sleep 2; done
+              echo "Applying schema 001"
+              psql "$ASYNCPG_URL" -f /sql/001_init.sql
+              echo "Applying schema 002"
+              psql "$ASYNCPG_URL" -f /sql/002_conversations.sql
+              echo "Applying schema 003"
+              psql "$ASYNCPG_URL" -f /sql/003_postgis_indexes.sql
+          volumeMounts:
+            - name: sql-files
+              mountPath: /sql
+      restartPolicy: OnFailure
+      volumes:
+        - name: sql-files
+          configMap:
+            name: loverace-sql

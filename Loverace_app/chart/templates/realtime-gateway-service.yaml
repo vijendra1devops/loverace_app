@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: realtime-gateway-svc
+  namespace: loverace
+spec:
+  selector:
+    app: realtime-gateway
+  ports:
+    - name: ws
+      protocol: TCP
+      port: 80
+      targetPort: 8001
+  type: ClusterIP

@@ -1,0 +1,79 @@
+/* 
+Wave svg credits - https://codepen.io/goodkatz/pen/LYPGxQz
+*/
+:root {
+  --dim-x: 80px;
+  --dim-y: 70px;
+  --cruve-height: 20px;
+}
+
+* {
+  border: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: white;
+}
+
+#myPath path {
+  transform: translate(0.125px, 0.033px);
+}
+
+.heart-wrap {
+  cursor: pointer;
+  perspective: 200px;
+  filter: drop-shadow(0px 10px 10px rgba(174, 196, 238, 0.5));
+}
+
+.heart {
+  position: relative;
+  height: var(--dim-y);
+  width: var(--dim-x);
+  overflow: hidden;
+  clip-path: url(#myPath);
+  background-image: radial-gradient(#c9d8f5 60%, #afc4ee);
+}
+
+.tank {
+  position: absolute;
+  bottom: 0;
+  height: 0;
+  width: var(--dim-x);
+  background-color: #6782bf;
+  z-index: 5;
+}
+
+.curve {
+  position: absolute;
+  bottom: calc(-1 * var(--cruve-height));
+  width: var(--dim-x);
+  height: var(--cruve-height);
+}
+.curve use {
+  animation: move 2s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+.curve use:nth-child(1) {
+  animation-duration: 3s;
+}
+.curve use:nth-child(2) {
+  animation-duration: 4s;
+}
+.curve use:nth-child(3) {
+  animation-duration: 2s;
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(-90px);
+  }
+  100% {
+    transform: translateX(85px);
+  }
+}
