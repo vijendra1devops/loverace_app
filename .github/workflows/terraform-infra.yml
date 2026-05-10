@@ -84,7 +84,18 @@ jobs:
         run: |
           terraform plan \
             -var-file=terraform.tfvars \
+            -no-color \
+            -detailed-exitcode \
             -out=tfplan
+
+          EXIT_CODE=$?
+
+          if [ $EXIT_CODE -eq 1 ]; then
+            echo "Terraform plan failed"
+            exit 1
+          fi
+
+          exit 0
 
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4

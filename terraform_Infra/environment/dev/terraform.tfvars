@@ -173,11 +173,11 @@ dev-aks-clusters = {
     subnets = {
       subnet1 = {
         subnet_name             = "backend-subnetd01"
-        subnet_address_prefixes = "10.0.2.0/26"
+        subnet_address_prefixes = ["10.0.2.0/26"]
       }
       subnet2 = {
         subnet_name             = "appgw-subnetd01"
-        subnet_address_prefixes = "10.0.4.0/26"
+        subnet_address_prefixes = ["10.0.4.0/26"]
       }
     }
     resource_group_name = "loverace-apprg-d01"
