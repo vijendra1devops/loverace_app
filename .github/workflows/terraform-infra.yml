@@ -65,7 +65,7 @@ jobs:
       - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: |
-          terraform init -upgrade \
+          terraform init -upgrade -reconfigure \
             -backend-config="resource_group_name=backend-rg" \
             -backend-config="storage_account_name=devbackendstg" \
             -backend-config="container_name=my-backend-cnt" \
@@ -126,7 +126,7 @@ jobs:
       - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: |
-          terraform init -upgrade \
+          terraform init -upgrade -reconfigure \
             -backend-config="resource_group_name=backend-rg" \
             -backend-config="storage_account_name=devbackendstg" \
             -backend-config="container_name=my-backend-cnt" \
