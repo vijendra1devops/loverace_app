@@ -1,38 +1,38 @@
 dev-rgs = {
-rg1 = {
+  rg1 = {
     name     = "loverace-apprg-d01"
     location = "central India"
     tags     = { environment = "dev" }
   }
-rg2 = {
+  rg2 = {
     name     = "loverace-apprg-d02"
     location = "central India"
-    
+
   }
 }
 dev-service_plans = {
-  service_plans1={
-  webapp-sp_name = "loverace-aspd01"
- resource_group_name = "loverace-apprg-d01"
- location            = "Central India"
-  sku_name             = "S1"
+  service_plans1 = {
+    webapp-sp_name      = "loverace-aspd01"
+    resource_group_name = "loverace-apprg-d01"
+    location            = "Central India"
+    sku_name            = "S1"
     os_type             = "Windows"
   }
 }
 
 dev-webapps = {
   webapp1 = {
-    webapp_name         = "loverace-webapp-d01"
-    resource_group_name = "loverace-apprg-d01"
-    location            = "Central India"
-    webapp-sp_name = "loverace-aspd01"
-    service_plan_rg           = "loverace-apprg-d01"
-    https_only               = true
-    client_affinity_enabled  = false
-    always_on                = true
-    use_32_bit_worker        = false
-    ftps_state               = "FtpsOnly"
-    minimum_tls_version      = "1.2"
+    webapp_name             = "loverace-webapp-d01"
+    resource_group_name     = "loverace-apprg-d01"
+    location                = "Central India"
+    webapp-sp_name          = "loverace-aspd01"
+    service_plan_rg         = "loverace-apprg-d01"
+    https_only              = true
+    client_affinity_enabled = false
+    always_on               = true
+    use_32_bit_worker       = false
+    ftps_state              = "FtpsOnly"
+    minimum_tls_version     = "1.2"
     # scm_type                 = "LocalGit"
     # health_check_path        = "/health"
     identity_type            = "SystemAssigned"
@@ -41,7 +41,7 @@ dev-webapps = {
     enviroment               = "dev"
     project                  = "demo-app"
   }
- }
+}
 
 ARM_SUBSCRIPTION_ID = "c52a4790-4e95-4021-9cac-5d2b2785e2c8"
 
@@ -113,11 +113,11 @@ dev-vnets = {
 #     storage_permissions     = ["Get", "Set"]
 #     certificate_permissions = ["Get", "List"]
 #   }
-    # Optional fields (use defaults if not provided)
-  #   key_permissions         = ["Get"]
-  #   secret_permissions      = ["Get", "List"]
-  #   certificate_permissions = []
-  # }
+# Optional fields (use defaults if not provided)
+#   key_permissions         = ["Get"]
+#   secret_permissions      = ["Get", "List"]
+#   certificate_permissions = []
+# }
 
 # dev-nsgs = {
 #   nsg-app = {
@@ -190,31 +190,34 @@ dev-aks-clusters = {
       project     = "loverace"
     }
 
-    acr_name          = "loveraceacrd01"
-    pip_name          = "loverace-pip-d01"
-    allocation_method = "Static"
-    sku               = "Standard"
-    cluster_name                  = "loverace-aks-d01"
-    app_gway_name                 = "loverace-appgw-d01"
-    sku_name                      = "Standard_v2"
-    sku_tier                      = "Standard_v2"
-    capacity                      = 2
-    gateway_ip_configuration      = "appgw-ipcfg"
-    frontend_port_name            = "appgw-frontend-port"
-    port                          = 80
+    acr_name                       = "loveraceacrd01"
+    pip_name                       = "loverace-pip-d01"
+    allocation_method              = "Static"
+    sku                            = "Standard"
+    cluster_name                   = "loverace-aks-d01"
+    app_gway_name                  = "loverace-appgw-d01"
+    sku_name                       = "Standard_v2"
+    sku_tier                       = "Standard_v2"
+    capacity                       = 2
+    gateway_ip_configuration       = "appgw-ipcfg"
+    frontend_port_name             = "appgw-frontend-port"
+    port                           = 80
     frontend_ip_configuration_name = "appgw-frontend-ip"
-    backend_address_pool_name     = "appgw-backendpool"
-    backend_http_settings_name    = "appgw-backendhttp"
-    request_routing_rule          = "appgw-routing-rule"
-    priority                      = 1
-    rule_type                     = "Basic"
-    http_listener_name            = "appgw-listener"
-    dns_prefix                    = "loveraceaksdev"
-    agis_name                     = "ingressapplicationgateway-loverace-aks-d01"
-    network_plugin                = "azure"
-    network_policy                = "azure"
-    service_cidr                  = "10.100.0.0/16"
-    dns_service_ip                = "10.100.0.10"
+    backend_address_pool_name      = "appgw-backendpool"
+    backend_http_settings_name     = "appgw-backendhttp"
+    cookie_based_affinity          = "Disabled"
+    protocol                       = "Http"
+    request_timeout                = 30
+    request_routing_rule           = "appgw-routing-rule"
+    priority                       = 1
+    rule_type                      = "Basic"
+    http_listener_name             = "appgw-listener"
+    dns_prefix                     = "loveraceaksdev"
+    agis_name                      = "ingressapplicationgateway-loverace-aks-d01"
+    network_plugin                 = "azure"
+    network_policy                 = "azure"
+    service_cidr                   = "10.100.0.0/16"
+    dns_service_ip                 = "10.100.0.10"
     default_node_pools = {
       nodepool1 = {
         node_pool_name = "agentpool"
@@ -248,16 +251,16 @@ dev-aks-clusters = {
 # }
 dev-postgresql-server-with-db = {
   "postgresql-server-1" = {
-    sql_server_name              = "dev-loverace-pgsql-server"
-    resource_group_name          = "loverace-apprg-d01"
-    location                     = "Central India"
-    version                      = "12"
-    administrator_login          = "loverace"
+    sql_server_name        = "dev-loverace-pgsql-server"
+    resource_group_name    = "loverace-apprg-d01"
+    location               = "Central India"
+    version                = "12"
+    administrator_login    = "loverace"
     administrator_password = "Dhaisabg@1392!"
-    firewall_rule                = "allow-access-to-azure-services"
-    db_name                      = "dev-loverace-pgsql-database"
-    storage_mb                   = 32768
-    sku_name                     = "B_Standard_B1ms"
+    firewall_rule          = "allow-access-to-azure-services"
+    db_name                = "dev-loverace-pgsql-database"
+    storage_mb             = 32768
+    sku_name               = "B_Standard_B1ms"
     tags = {
       environment = "dev"
       owner       = "loveraceteam"

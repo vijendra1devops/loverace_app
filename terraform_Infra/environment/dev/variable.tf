@@ -30,7 +30,7 @@ variable "ARM_SUBSCRIPTION_ID" {
 variable "dev-acr" {}
 
 variable "dev-aks-clusters" {
-     description = "Map of AKS clusters configuration."
+  description = "Map of AKS clusters configuration."
   type = map(object({
     # Network configuration
     vnet_name           = string
@@ -48,7 +48,7 @@ variable "dev-aks-clusters" {
     allocation_method = string
     sku               = string
     # Application Gateway configuration
-    cluster_name                  = string
+    cluster_name                   = string
     app_gway_name                  = string
     sku_tier                       = string
     sku_name                       = string
@@ -67,14 +67,14 @@ variable "dev-aks-clusters" {
     rule_type                      = string
     http_listener_name             = string
     # AKS Cluster configuration
-    default_node_pools     = map(object({
-      node_pool_name=string
-    vm_size        = string
-    node_count     = number
+    default_node_pools = map(object({
+      node_pool_name = string
+      vm_size        = string
+      node_count     = number
     }))
-    
-  #network profile
-      dns_prefix     = string
+
+    #network profile
+    dns_prefix     = string
     agis_name      = string
     network_plugin = string
     network_policy = string
