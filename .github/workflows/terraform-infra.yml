@@ -49,7 +49,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.9.0
+          terraform_version: 1.9.8
 
       - name: Azure Login
         uses: azure/login@v2
@@ -65,7 +65,7 @@ jobs:
       - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: |
-          terraform init \
+          terraform init -upgrade \
             -backend-config="resource_group_name=backend-rg" \
             -backend-config="storage_account_name=devbackendstg" \
             -backend-config="container_name=my-backend-cnt" \
@@ -110,7 +110,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.9.0
+          terraform_version: 1.9.8
 
       - name: Azure Login
         uses: azure/login@v2
@@ -126,7 +126,7 @@ jobs:
       - name: Terraform Init
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: |
-          terraform init \
+          terraform init -upgrade \
             -backend-config="resource_group_name=backend-rg" \
             -backend-config="storage_account_name=devbackendstg" \
             -backend-config="container_name=my-backend-cnt" \
