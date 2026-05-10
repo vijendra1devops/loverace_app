@@ -4,15 +4,15 @@ module "module-rg" {
 }
 
 module "module-app-service_plans" {
-  depends_on = [ module.module-rg ]
-  source = "../../resource_modules/azurerm-service_plan"
+  depends_on    = [module.module-rg]
+  source        = "../../resource_modules/azurerm-service_plan"
   service_plans = var.dev-service_plans
 }
 
 module "module-webapp" {
-  depends_on = [ module.module-rg, module.module-app-service_plans ]
-  source = "../../resource_modules/azurerm-webapp"
-  webapps = var.dev-webapps
+  depends_on = [module.module-rg, module.module-app-service_plans]
+  source     = "../../resource_modules/azurerm-webapp"
+  webapps    = var.dev-webapps
 }
 module "module-vnets" {
   depends_on = [module.module-rg]
@@ -47,7 +47,7 @@ module "module-vnets" {
 # }
 
 # module "module-linux-vms" {
-  
+
 #   depends_on = [ module.module-vnets,module.module-keyvaults ]#module.var.dev-asgs 
 #   source = "../../modules/azurerm-linux-vms"
 #   linux-vms=var.dev-linux-vms
@@ -72,9 +72,9 @@ module "module-aks-cluster" {
 # }
 
 module "postgrssqlserver" {
-  depends_on = [ module.module-vnets ]
-  source = "../../resource_modules/azurerm_postgrey_server"
+  depends_on                = [module.module-vnets]
+  source                    = "../../resource_modules/azurerm_postgrey_server"
   postgresql-server-with-db = var.dev-postgresql-server-with-db
 
-  
+
 }
