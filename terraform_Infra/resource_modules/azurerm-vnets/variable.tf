@@ -8,7 +8,7 @@ description = "Map of virtual networks and their subnets"
     dns_servers         = optional(list(string), [])
     subnets             = list(object({
       name             = string
-      address_prefixes = list(string)
+      address_prefixes = string
     }))
   }))
 }
