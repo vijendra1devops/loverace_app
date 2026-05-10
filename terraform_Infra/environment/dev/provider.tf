@@ -4,10 +4,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "4.70.0"
     }
-    random = {
-      source  = "hashicorp/random"
-      version = "4.7.0"
-    }
+    # random = {
+    #   source  = "hashicorp/random"
+    #   version = "4.7.0"
+    # }
      }
    backend "azurerm" {
       resource_group_name  = "backend-rg"          # Can be passed via `-backend-config=`"resource_group_name=<resource group name>"` in the `init` command.
@@ -24,5 +24,5 @@ provider "azurerm" {
   subscription_id = var.ARM_SUBSCRIPTION_ID
 }
 
-provider "random" {}
+# provider "random" {}
 
