@@ -1,0 +1,54 @@
+# Default values for the loverace Helm chart
+
+acrLoginServer: ""
+imageTag: "latest"
+
+apiDomain: "api.loverace.app"
+tls:
+  secretName: loverace-api-tls
+
+keyvault:
+  name: ""
+  tenantId: ""
+  subscriptionId: ""
+
+certManager:
+  email: "devops@loverace.app"
+  subscriptionId: ""
+  resourceGroup: ""
+  hostedZoneName: ""
+  managedIdentityClientId: ""
+
+frontend:
+  image:
+    repository: ""
+    tag: ""
+
+core_api:
+  image:
+    repository: ""
+    tag: ""
+  replicaCount: 2
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "256Mi"
+  moderationEnabled: false
+  debug: false
+  pgNotifyChannel: "loverace_events"
+  jwtExpiry: 60
+  storage:
+    container: "media"
+
+frontend:
+  origin: "https://loverace.azurewebsites.net"
+
+realtime_gateway:
+  image:
+    repository: ""
+    tag: ""
+  replicaCount: 2
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"

@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name        = "loverace-realtime-gateway"
+version     = "0.1.0"
+description = "Loverace – WebSocket gateway, chat, bond XP engine (realtime microservice)"
+requires-python = ">=3.12"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]

@@ -1,0 +1,67 @@
+{{/* core-api Deployment */}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-api
+  namespace: loverace
+  labels:
+    app: core-api
+    tier: backend
+spec:
+  replicas: {{ .Values.core_api.replicaCount }}
+  selector:
+    matchLabels:
+      app: core-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: core-api
+        tier: backend
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: core-api
+          image: {{ if .Values.core_api.image.repository }}{{ printf "%s:%s" .Values.core_api.image.repository .Values.core_api.image.tag }}{{ else }}"<your-acr>/loverace/core-api:{{ .Values.imageTag }}"{{ end }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: core-api-config
+            - secretRef:
+                name: core-api-secrets
+          resources:
+            requests:
+              cpu: "{{ .Values.core_api.resources.requests.cpu }}"
+              memory: "{{ .Values.core_api.resources.requests.memory }}"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            failureThreshold: 3
+          volumeMounts:
+            - name: kv-secrets
+              mountPath: /mnt/kv-secrets
+              readOnly: true
+      volumes:
+        - name: kv-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: kv-core-api

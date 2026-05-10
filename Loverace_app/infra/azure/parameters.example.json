@@ -1,0 +1,14 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location":          { "value": "eastus" },
+    "env":               { "value": "prod" },
+    "appName":           { "value": "loverace" },
+    "pgAdminUser":       { "value": "lovraceadmin" },
+    "pgAdminPassword":   { "value": "CHANGE_ME_strong_password_here" },
+    "jwtSecret":         { "value": "CHANGE_ME_at_least_32_characters_long" },
+    "kvAdminObjectId":   { "value": "00000000-0000-0000-0000-000000000000" },
+    "frontendOrigin":    { "value": "https://loverace.azurewebsites.net" }
+  }
+}

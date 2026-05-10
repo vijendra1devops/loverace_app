@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name        = "loverace-core-api"
+version     = "0.1.0"
+description = "Loverace – Auth, Profiles, Radar, Swipes, Matches (REST microservice)"
+requires-python = ">=3.12"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]

@@ -1,0 +1,12 @@
+# realtime_gateway – Kubernetes ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: realtime-gateway-config
+  namespace: loverace
+data:
+  PG_NOTIFY_CHANNEL:   "loverace_events"
+  BOND_NOTIFY_CHANNEL: "bond_updates"
+  XP_LOCK_SECONDS:     "10"
+  XP_CAP_PER_MSG:      "30"
+  JWT_ALGORITHM:       "HS256"

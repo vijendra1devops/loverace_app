@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realtime-gateway
+  namespace: loverace
+  labels:
+    app: realtime-gateway
+    tier: backend
+spec:
+  replicas: {{ .Values.realtime_gateway.replicaCount }}
+  selector:
+    matchLabels:
+      app: realtime-gateway
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: realtime-gateway
+        tier: backend
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: realtime-gateway
+          image: {{ if .Values.realtime_gateway.image.repository }}{{ printf "%s:%s" .Values.realtime_gateway.image.repository .Values.realtime_gateway.image.tag }}{{ else }}"<your-acr>/loverace/realtime-gateway:{{ .Values.imageTag }}"{{ end }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8001
+          envFrom:
+            - configMapRef:
+                name: realtime-gateway-config
+            - secretRef:
+                name: realtime-gateway-secrets
+          resources:
+            requests:
+              cpu: "{{ .Values.realtime_gateway.resources.requests.cpu }}"
+              memory: "{{ .Values.realtime_gateway.resources.requests.memory }}"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8001
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8001
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            failureThreshold: 3
+          volumeMounts:
+            - name: kv-secrets
+              mountPath: /mnt/kv-secrets
+              readOnly: true
+      volumes:
+        - name: kv-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: kv-realtime-gateway

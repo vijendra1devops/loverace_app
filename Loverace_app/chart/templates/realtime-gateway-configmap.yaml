@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: realtime-gateway-config
+  namespace: loverace
+data:
+  PG_NOTIFY_CHANNEL: "loverace_events"
+  BOND_NOTIFY_CHANNEL: "bond_updates"
+  JWT_ALGORITHM: "HS256"
