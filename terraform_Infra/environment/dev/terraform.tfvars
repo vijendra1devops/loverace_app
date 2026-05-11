@@ -221,7 +221,7 @@ dev-aks-clusters = {
     default_node_pools = {
       nodepool1 = {
         node_pool_name = "agentpool"
-        vm_size        = "Standard_DS2_v2"
+        vm_size        = "standard_a2_v2"
         node_count     = 2
       }
     }
