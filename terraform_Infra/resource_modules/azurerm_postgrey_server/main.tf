@@ -23,11 +23,10 @@ resource "azurerm_postgresql_flexible_server" "postgresql-servers" {
 #   end_ip_address   = "0.0.0.0"
 # }
 
-resource "azurerm_postgresql_database" "pg_db" {
-  for_each = var.postgresql-server-with-db
-  name                = each.value.db_name
-  resource_group_name = each.value.resource_group_name
-  server_name         = azurerm_postgresql_flexible_server.postgresql-servers[each.key].name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
+resource "azurerm_postgresql_flexible_server_database" "pg_db" {
+  for_each  = var.postgresql-server-with-db
+  name      = each.value.db_name
+  server_id = azurerm_postgresql_flexible_server.postgresql-servers[each.key].id
+  charset   = "UTF8"
+  collation = "en_US.utf8"
 }

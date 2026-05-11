@@ -55,11 +55,11 @@ dev-vnets = {
 
     subnets = [
       {
-        name             = "frontend-subnetd01"
+        name             = "frontend-subnet-d01"
         address_prefixes = ["10.0.1.0/26"]
       },
       {
-        name             = "backend-subnetd01"
+        name             = "backend-subnet-d01"
         address_prefixes = ["10.0.2.0/26"]
       },
       {
@@ -67,7 +67,7 @@ dev-vnets = {
         address_prefixes = ["10.0.3.0/26"]
       },
       {
-        name             = "appgw-subnetd01"
+        name             = "appgw-subnet-d01"
         address_prefixes = ["10.0.4.0/26"]
       }
     ]
@@ -172,11 +172,11 @@ dev-aks-clusters = {
     vnet_address_space = ["10.0.0.0/16"]
     subnets = {
       subnet1 = {
-        subnet_name             = "backend-subnetd01"
+        subnet_name             = "backend-subnet-d01"
         subnet_address_prefixes = ["10.0.2.0/26"]
       }
       subnet2 = {
-        subnet_name             = "appgw-subnetd01"
+        subnet_name             = "appgw-subnet-d01"
         subnet_address_prefixes = ["10.0.4.0/26"]
       }
     }
