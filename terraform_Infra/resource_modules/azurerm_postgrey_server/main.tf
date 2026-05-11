@@ -12,6 +12,12 @@ resource "azurerm_postgresql_flexible_server" "postgresql-servers" {
   auto_grow_enabled           = true
   backup_retention_days       = 7
   geo_redundant_backup_enabled = false
+  lifecycle {
+  ignore_changes = [
+    zone,
+    high_availability
+  ]
+}
   
 }
 
