@@ -59,7 +59,7 @@ module "module-acr" {
 
 }
 module "module-aks-cluster" {
-  depends_on   = [module.module-rg]
+  depends_on   = [module.module-rg, module.module-vnets]
   source       = "../../resource_modules/azurerm_aks"
   aks-clusters = var.dev-aks-clusters
 
