@@ -78,9 +78,8 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
 
           tags: |
-            tags: |
-              ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.image }}:${{ github.sha }}
-              ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.image }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.image }}:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.image }}:latest
             
             
 
