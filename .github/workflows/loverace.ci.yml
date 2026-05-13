@@ -26,15 +26,15 @@ jobs:
       matrix:
         include:
           - service: frontend
-            context: ./LOVERACE_APP/frontend
+            context: ./Loverace_app/frontend
             image: loverace-frontend
 
           - service: core_api
-            context: ./LOVERACE_APP/services/core_api
+            context: ./Loverace_app/services/core_api
             image: loverace-core-api
 
           - service: realtime_gateway
-            context: ./LOVERACE_APP/services/realtime_gateway
+            context: ./Loverace_app/services/realtime_gateway
             image: loverace-realtime-gateway
 
     steps:
