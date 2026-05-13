@@ -4,24 +4,32 @@ on:
   workflow_dispatch:
     inputs:
       image_tag:
-        description: "Docker image tag to deploy (defaults to latest main SHA)"
+        description: "Docker image tag to deploy"
         required: false
         default: "latest"
+
   workflow_run:
-    workflows: ["CI — Build & Push Docker Images"]
-    types: [completed]
-    branches: [main]
+    workflows:
+      - "CI - Build & Push Docker Images"
+    types:
+      - completed
+
+permissions:
+  contents: read
 
 jobs:
   deploy:
-    name: Helm upgrade → AKS
+    name: Helm upgrade - AKS
     runs-on: ubuntu-latest
-    # Skip if triggered by a failed CI run
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success'
 
-    environment: production
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_branch == 'main'
+      )
+
+    environment: dev
 
     steps:
       - name: Checkout
@@ -31,46 +39,49 @@ jobs:
         id: tag
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "tag=${{ github.event.inputs.image_tag }}" >> "$GITHUB_OUTPUT"
+            echo "tag=${{ github.event.inputs.image_tag }}" >> $GITHUB_OUTPUT
           else
-            echo "tag=${{ github.event.workflow_run.head_sha }}" >> "$GITHUB_OUTPUT"
+            echo "tag=${{ github.event.workflow_run.head_sha }}" >> $GITHUB_OUTPUT
           fi
 
-      - name: Azure login
+      - name: Azure Login
         uses: azure/login@v2
         with:
-          creds: ${{ toJson({
-            clientId: secrets.AZURE_CLIENT_ID,
-            clientSecret: secrets.AZURE_CLIENT_SECRET,
-            tenantId: secrets.AZURE_TENANT_ID,
-            subscriptionId: secrets.AZURE_SUBSCRIPTION_ID
-          }) }}
+          creds: |
+            {
+              "clientId":"${{ secrets.AZURE_CLIENT_ID }}",
+              "clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}",
+              "subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}",
+              "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
+            }
 
       - name: Get AKS credentials
         run: |
           az aks get-credentials \
             --resource-group "${{ secrets.AKS_RESOURCE_GROUP }}" \
-            --name            "${{ secrets.AKS_CLUSTER_NAME }}" \
+            --name "${{ secrets.AKS_CLUSTER_NAME }}" \
             --overwrite-existing
 
-      - name: Set up Helm
+      - name: Setup Helm
         uses: azure/setup-helm@v4
 
-      - name: Install cert-manager CRDs (idempotent)
+      - name: Install cert-manager CRDs
         run: |
-          kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/crds.yaml \
-            --server-side
+          kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/crds.yaml --server-side
 
-      - name: Install cert-manager (if not present)
+      - name: Install cert-manager
         run: |
           helm repo add jetstack https://charts.jetstack.io
           helm repo update
-          helm upgrade --install cert-manager jetstack/cert-manager \
-            --namespace cert-manager --create-namespace \
-            --set installCRDs=false \
-            --wait --timeout 5m
 
-      - name: Helm upgrade — loverace
+          helm upgrade --install cert-manager jetstack/cert-manager \
+            --namespace cert-manager \
+            --create-namespace \
+            --set installCRDs=false \
+            --wait \
+            --timeout 5m
+
+      - name: Helm upgrade
         run: |
           helm upgrade --install loverace ./chart \
             --namespace loverace \
@@ -97,6 +108,5 @@ jobs:
 
       - name: Verify rollout
         run: |
-          kubectl rollout status deployment/core-api        -n loverace --timeout=5m
+          kubectl rollout status deployment/core-api -n loverace --timeout=5m
           kubectl rollout status deployment/realtime-gateway -n loverace --timeout=5m
-          echo "✅  Deploy complete — pods running"
