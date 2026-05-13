@@ -14,12 +14,12 @@ module "module-webapp" {
   source     = "../../resource_modules/azurerm-webapp"
   webapps    = var.dev-webapps
 }
-module "module-vnets" {
-  depends_on = [module.module-rg]
-  source     = "../../resource_modules/azurerm-vnets"
-  vnets      = var.dev-vnets
+# module "module-vnets" {
+#   depends_on = [module.module-rg]
+#   source     = "../../resource_modules/azurerm-vnets"
+#   vnets      = var.dev-vnets
 
-}
+# }
 # module "module-nsgs" {
 #   depends_on = [ module.module-rg ]
 #   source = "../../resource_modules/azurerm-nsgs"
@@ -52,18 +52,18 @@ module "module-vnets" {
 #   source = "../../modules/azurerm-linux-vms"
 #   linux-vms=var.dev-linux-vms
 # }
-module "module-acr" {
-  depends_on = [module.module-rg]
-  source     = "../../resource_modules/azurerm_acr"
-  acr        = var.dev-acr
+# module "module-acr" {
+#   depends_on = [module.module-rg]
+#   source     = "../../resource_modules/azurerm_acr"
+#   acr        = var.dev-acr
 
-}
-module "module-aks-cluster" {
-  depends_on   = [module.module-rg, module.module-vnets]
-  source       = "../../resource_modules/azurerm_aks"
-  aks-clusters = var.dev-aks-clusters
+# }
+# module "module-aks-cluster" {
+#   depends_on   = [module.module-rg, module.module-vnets]
+#   source       = "../../resource_modules/azurerm_aks"
+#   aks-clusters = var.dev-aks-clusters
 
-}
+# }
 
 # module "module-mssql-server-with-db" {
 #   depends_on           = [module.module-rg]
@@ -71,10 +71,10 @@ module "module-aks-cluster" {
 #   mssql-server-with-db = var.dev-mssql-server-with-db
 # }
 
-module "postgrssqlserver" {
-  depends_on                = [module.module-vnets]
-  source                    = "../../resource_modules/azurerm_postgrey_server"
-  postgresql-server-with-db = var.dev-postgresql-server-with-db
+# module "postgrssqlserver" {
+#   depends_on                = [module.module-vnets]
+#   source                    = "../../resource_modules/azurerm_postgrey_server"
+#   postgresql-server-with-db = var.dev-postgresql-server-with-db
 
 
-}
+# }

@@ -52,7 +52,7 @@ jobs:
         with:
           terraform_version: 1.9.8
 
-      - name: Azure Login
+      - name: Azure Login 
         uses: azure/login@v2
         with:
           creds: |

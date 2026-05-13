@@ -4,11 +4,11 @@ dev-rgs = {
     location = "central India"
     tags     = { environment = "dev" }
   }
-  rg2 = {
-    name     = "loverace-apprg-d02"
-    location = "central India"
+  # rg2 = {
+  #   name     = "loverace-apprg-d02"
+  #   location = "central India"
 
-  }
+  # }
 }
 dev-service_plans = {
   service_plans1 = {
@@ -43,36 +43,35 @@ dev-webapps = {
   }
 }
 
-ARM_SUBSCRIPTION_ID = "c52a4790-4e95-4021-9cac-5d2b2785e2c8"
 
-dev-vnets = {
-  vnet1 = {
-    name                = "loverace-vnet-d01"
-    location            = "Central India"
-    resource_group_name = "loverace-apprg-d01"
-    address_space       = ["10.0.0.0/16"]
-    # dns_servers         = ["8.8.8.8", "8.8.4.4"]
+# dev-vnets = {
+#   vnet1 = {
+#     name                = "loverace-vnet-d01"
+#     location            = "Central India"
+#     resource_group_name = "loverace-apprg-d01"
+#     address_space       = ["10.0.0.0/16"]
+#     # dns_servers         = ["8.8.8.8", "8.8.4.4"]
 
-    subnets = [
-      {
-        name             = "frontend-subnet-d01"
-        address_prefixes = ["10.0.1.0/26"]
-      },
-      {
-        name             = "backend-subnet-d01"
-        address_prefixes = ["10.0.2.0/26"]
-      },
-      {
-        name             = "subnet-db"
-        address_prefixes = ["10.0.3.0/26"]
-      },
-      {
-        name             = "appgw-subnet-d01"
-        address_prefixes = ["10.0.4.0/26"]
-      }
-    ]
-  }
-}
+#     subnets = [
+#       {
+#         name             = "frontend-subnet-d01"
+#         address_prefixes = ["10.0.1.0/26"]
+#       },
+#       {
+#         name             = "backend-subnet-d01"
+#         address_prefixes = ["10.0.2.0/26"]
+#       },
+#       {
+#         name             = "subnet-db"
+#         address_prefixes = ["10.0.3.0/26"]
+#       },
+#       {
+#         name             = "appgw-subnet-d01"
+#         address_prefixes = ["10.0.4.0/26"]
+#       }
+#     ]
+#   }
+# }
 
 # dev-win-vms = {
 #   vm1 = {
@@ -152,81 +151,81 @@ dev-vnets = {
 #   }
 # }
 
-dev-acr = {
-  dev-acr1 = {
-    name                = "loveraceacrd01"
-    resource_group_name = "loverace-apprg-d01"
-    location            = "Central India"
-    sku                 = "Standard"
-    tags = {
-      environment = "dev"
-      owner       = "loveraceteam"
-      application = "loverace"
-      region      = "Central India"
-      project     = "loverace"
-} } }
+# dev-acr = {
+#   dev-acr1 = {
+#     name                = "loveraceacrd01"
+#     resource_group_name = "loverace-apprg-d01"
+#     location            = "Central India"
+#     sku                 = "Standard"
+#     tags = {
+#       environment = "dev"
+#       owner       = "loveraceteam"
+#       application = "loverace"
+#       region      = "Central India"
+#       project     = "loverace"
+# } } }
 
-dev-aks-clusters = {
-  cluster = {
-    vnet_name          = "loverace-vnet-d01"
-    vnet_address_space = ["10.0.0.0/16"]
-    subnets = {
-      subnet1 = {
-        subnet_name             = "backend-subnet-d01"
-        subnet_address_prefixes = ["10.0.2.0/26"]
-      }
-      subnet2 = {
-        subnet_name             = "appgw-subnet-d01"
-        subnet_address_prefixes = ["10.0.4.0/26"]
-      }
-    }
-    resource_group_name = "loverace-apprg-d01"
-    location            = "Central India"
-    tags = {
-      environment = "dev"
-      owner       = "loveraceteam"
-      application = "loverace"
-      region      = "Central India"
-      project     = "loverace"
-    }
+# dev-aks-clusters = {
+#   cluster = {
+#     vnet_name          = "loverace-vnet-d01"
+#     vnet_address_space = ["10.0.0.0/16"]
+#     subnets = {
+#       subnet1 = {
+#         subnet_name             = "backend-subnet-d01"
+#         subnet_address_prefixes = ["10.0.2.0/26"]
+#       }
+#       subnet2 = {
+#         subnet_name             = "appgw-subnet-d01"
+#         subnet_address_prefixes = ["10.0.4.0/26"]
+#       }
+#     }
+#     resource_group_name = "loverace-apprg-d01"
+#     location            = "Central India"
+#     tags = {
+#       environment = "dev"
+#       owner       = "loveraceteam"
+#       application = "loverace"
+#       region      = "Central India"
+#       project     = "loverace"
+#     }
 
-    acr_name                       = "loveraceacrd01"
-    pip_name                       = "loverace-pip-d01"
-    allocation_method              = "Static"
-    sku                            = "Standard"
-    cluster_name                   = "loverace-aks-d01"
-    app_gway_name                  = "loverace-appgw-d01"
-    sku_name                       = "Standard_v2"
-    sku_tier                       = "Standard_v2"
-    capacity                       = 2
-    gateway_ip_configuration       = "appgw-ipcfg"
-    frontend_port_name             = "appgw-frontend-port"
-    port                           = 80
-    frontend_ip_configuration_name = "appgw-frontend-ip"
-    backend_address_pool_name      = "appgw-backendpool"
-    backend_http_settings_name     = "appgw-backendhttp"
-    cookie_based_affinity          = "Disabled"
-    protocol                       = "Http"
-    request_timeout                = 30
-    request_routing_rule           = "appgw-routing-rule"
-    priority                       = 1
-    rule_type                      = "Basic"
-    http_listener_name             = "appgw-listener"
-    dns_prefix                     = "loveraceaksdev"
-    agis_name                      = "ingressapplicationgateway-loverace-aks-d01"
-    network_plugin                 = "azure"
-    network_policy                 = "azure"
-    service_cidr                   = "10.100.0.0/16"
-    dns_service_ip                 = "10.100.0.10"
-    default_node_pools = {
-      nodepool1 = {
-        node_pool_name = "agentpool"
-        vm_size        = "standard_B2s"
-        node_count     = 2
-      }
-    }
-  }
-}
+#     acr_name                       = "loveraceacrd01"
+#     pip_name                       = "loverace-pip-d01"
+#     allocation_method              = "Static"
+#     sku                            = "Standard"
+#     cluster_name                   = "loverace-aks-d01"
+#     app_gway_name                  = "loverace-appgw-d01"
+#     sku_name                       = "Standard_v2"
+#     sku_tier                       = "Standard_v2"
+#     capacity                       = 2
+#     gateway_ip_configuration       = "appgw-ipcfg"
+#     frontend_port_name             = "appgw-frontend-port"
+#     port                           = 80
+#     frontend_ip_configuration_name = "appgw-frontend-ip"
+#     backend_address_pool_name      = "appgw-backendpool"
+#     backend_http_settings_name     = "appgw-backendhttp"
+#     cookie_based_affinity          = "Disabled"
+#     protocol                       = "Http"
+#     request_timeout                = 30
+#     request_routing_rule           = "appgw-routing-rule"
+#     priority                       = 1
+#     rule_type                      = "Basic"
+#     http_listener_name             = "appgw-listener"
+#     dns_prefix                     = "loveraceaksdev"
+#     agis_name                      = "ingressapplicationgateway-loverace-aks-d01"
+#     network_plugin                 = "azure"
+#     network_policy                 = "azure"
+#     service_cidr                   = "10.100.0.0/16"
+#     dns_service_ip                 = "10.100.0.10"
+#     default_node_pools = {
+#       nodepool1 = {
+#         node_pool_name = "agentpool"
+#         vm_size        = "standard_B2s"
+#         node_count     = 2
+#       }
+#     }
+#   }
+# }
 
 # dev-mssql-server-with-db = {
 #   "mssql-server-1" = {
@@ -249,25 +248,25 @@ dev-aks-clusters = {
 #     }
 #   }
 # }
-dev-postgresql-server-with-db = {
-  "postgresql-server-1" = {
-    sql_server_name        = "dev-loverace-pgsql-server"
-    resource_group_name    = "loverace-apprg-d01"
-    location               = "Central India"
-    version                = "12"
-    administrator_login    = "loverace"
-    administrator_password = "Dhaisabg@1392!"
-    firewall_rule          = "allow-access-to-azure-services"
-    db_name                = "dev-loverace-pgsql-database"
-    storage_mb             = 32768
-    sku_name               = "B_Standard_B1ms"
-    tags = {
-      environment = "dev"
-      owner       = "loveraceteam"
-      application = "loverace"
-      region      = "Central India"
-      project     = "loverace"
-    }
-  }
-}
+# dev-postgresql-server-with-db = {
+#   "postgresql-server-1" = {
+#     sql_server_name        = "dev-loverace-pgsql-server"
+#     resource_group_name    = "loverace-apprg-d01"
+#     location               = "Central India"
+#     version                = "12"
+#     administrator_login    = "loverace"
+#     administrator_password = "Dhaisabg@1392!"
+#     firewall_rule          = "allow-access-to-azure-services"
+#     db_name                = "dev-loverace-pgsql-database"
+#     storage_mb             = 32768
+#     sku_name               = "B_Standard_B1ms"
+#     tags = {
+#       environment = "dev"
+#       owner       = "loveraceteam"
+#       application = "loverace"
+#       region      = "Central India"
+#       project     = "loverace"
+#     }
+#   }
+# }
 
