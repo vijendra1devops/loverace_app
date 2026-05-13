@@ -78,10 +78,11 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
 
           tags: |
-            #  ${{ env.ACR_LOGIN_SERVER }}/${{ matrix.image }}:${{ github.sha }}
-            # ${{ env.ACR_LOGIN_SERVER }}/${{ matrix.image }}:latest
-            ${{ env.DOCKERHUB_USERNAME }}/${{ matrix.image }}:${{ github.sha }}
-            ${{ env.DOCKERHUB_USERNAME }}/${{ matrix.image }}:latest
+            tags: |
+              ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.image }}:${{ github.sha }}
+              ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.image }}:latest
+            
+            
 
           build-args: |
             VITE_API_URL=https://${{ vars.API_DOMAIN }}
