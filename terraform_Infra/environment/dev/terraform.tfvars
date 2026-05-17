@@ -19,7 +19,7 @@ dev-service_plans = {
     os_type             = "Windows"
   }
 }
-
+# app service configuration for webapps
 dev-webapps = {
   webapp1 = {
     webapp_name             = "loverace-webapp-d01"
