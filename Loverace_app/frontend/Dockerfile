@@ -21,6 +21,8 @@ ENV VITE_API_URL=$VITE_API_URL \
     VITE_DUMMY_DATA=$VITE_DUMMY_DATA
 
 RUN npm run build
+# RUN apt update && apt install -y nginx
+# RUN cp -r dist/* /usr/share/nginx/html/
 
 
 # ── Stage 2: Serve with nginx ──────────────────────────────────────────────
